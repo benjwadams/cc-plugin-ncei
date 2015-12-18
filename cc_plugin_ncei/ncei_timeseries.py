@@ -17,7 +17,7 @@ class NCEITimeSeries(BaseNCCheck):
     name = 'ncei-timeseries'
 
     @classmethod
-    def beliefs(cls): 
+    def beliefs(cls):
         '''
         Not applicable for gliders
         '''
@@ -46,12 +46,12 @@ class NCEITimeSeries(BaseNCCheck):
             return self.make_result(level, score, out_of, 'Verifies time exists and is valid', messages)
 
         variable = ds.dataset.variables['time']
-        
+
         if getattr(variable, "standard_name", None) == 'time':
             score += 1
         else:
             messages.append("Invalid standard_name for time")
-            
+
         # Calendar is required if it's not default which is gregorian
         calendar = getattr(variable, "calendar", None)
         # Valid calendars come from CF 1.6 §4.4.1
@@ -66,7 +66,4 @@ class NCEITimeSeries(BaseNCCheck):
         else:
             messages.append("time must define axis to be equal to 'T'")
 
-
         return self.make_result(level, score, out_of, 'Verifies time exists and is valid', messages)
-
-
